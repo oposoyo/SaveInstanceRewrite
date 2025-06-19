@@ -365,7 +365,7 @@ local CFrame_Rotation_IDs = {
 	["\0\0\0\0\0\0\128\191\0\0\0\0\0\0\128\63\0\0\0\0\0\0\0\128\0\0\0\0\0\0\0\0\0\0\128\63"] = 0x0a,
 	["\0\0\0\0\0\0\0\0\0\0\128\191\0\0\128\63\0\0\0\0\0\0\0\0\0\0\0\0\0\0\128\191\0\0\0\0"] = 0x0c,
 	["\0\0\0\0\0\0\128\63\0\0\0\0\0\0\0\0\0\0\0\0\0\0\128\63\0\0\128\63\0\0\0\0\0\0\0\0"] = 0x0d,
-	["\0\0\0\0\0\0\0\0\0\0\128\191\0\0\0\0\0\0\128\63\0\0\0\0\0\0\128\63\0\0\0\0\0\0\0\0"] = 0x0e,
+	["\0\0\0\0\0\0\128\191\0\0\0\0\0\0\128\63\0\0\0\0\0\0\128\63\0\0\0\0\0\0\0\0"] = 0x0e,
 	["\0\0\0\0\0\0\128\191\0\0\0\0\0\0\0\0\0\0\0\0\0\0\128\191\0\0\128\63\0\0\0\0\0\0\0\0"] = 0x10,
 	["\0\0\0\0\0\0\0\0\0\0\128\63\0\0\0\0\0\0\128\191\0\0\0\0\0\0\128\63\0\0\0\0\0\0\0\128"] = 0x11,
 	["\0\0\128\191\0\0\0\0\0\0\0\0\0\0\0\0\0\0\128\63\0\0\0\0\0\0\0\0\0\0\0\0\0\0\128\191"] = 0x14,
@@ -1349,6 +1349,9 @@ do
 		Sound = {
 			xmlRead_MaxDistance_3 = "RollOffMaxDistance", -- * Also MaxDistance
 		},
+		SurfaceAppearance = {
+			TexturePack = "TextureID", -- Fix for TexturePack not being a valid member
+		},
 		-- ViewportFrame = { -- * Pointless because these reflect CurrentCamera's properties
 		-- 	CameraCFrame = function(instance) -- *
 		-- 		local CurrentCamera = instance.CurrentCamera
@@ -1757,7 +1760,7 @@ local function synsaveinstance(CustomOptions, CustomOptions2)
 		IgnoreDefaultPlayerScripts = EXECUTOR_NAME ~= "Wave" and true,
 		SaveBytecode = false,
 
-		IgnoreProperties = {},
+		IgnoreProperties = { "TexturePack" }, -- Added TexturePack to ignored properties
 
 		IgnoreList = { "CoreGui", "CorePackages" },
 

@@ -2776,7 +2776,12 @@ local function synsaveinstance(CustomOptions, CustomOptions2)
 							and not (PropertyName == "Source" and isLuaSourceContainer(instance))
 						then -- ? Could be not just "Source" in the future
 							if new_def_inst then
-								default_instance[PropertyName] = index(new_def_inst, PropertyName)
+								local ok, val = pcall(index, new_def_inst, PropertyName)
+								if ok then
+									default_instance[PropertyName] = val
+								else
+									default_instance[PropertyName] = nil
+								end
 							end
 							if default_instance[PropertyName] == raw then
 								continue

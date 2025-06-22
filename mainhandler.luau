@@ -2448,6 +2448,12 @@ local function synsaveinstance(CustomOptions, CustomOptions2)
 			return __BREAK
 		end
 
+		-- Special handling for known problematic properties
+		if instance.ClassName == "BodyPartDescription" and propertyName == "AssetId" then
+			property.CanRead = false
+			return __BREAK
+		end
+
 		if special then
 			if gethiddenproperty then
 				local ok, result = pcall(gethiddenproperty, instance, propertyName)
@@ -2472,7 +2478,16 @@ local function synsaveinstance(CustomOptions, CustomOptions2)
 			end
 		else
 			if CanRead then
-				raw = instance[propertyName]
+				-- Add an additional safety check to catch property access errors
+				local ok, result = pcall(function()
+					return instance[propertyName]
+				end)
+				if ok then
+					raw = result
+				else
+					property.CanRead = false
+					return __BREAK
+				end
 			else -- Assuming CanRead == nil (untested)
 				local ok, result = pcall(index, instance, propertyName)
 
